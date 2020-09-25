@@ -1,0 +1,22 @@
+{
+  "name": "Exemple_List_Report_Northwind_UI5_Tooling",
+  "version": "0.0.1",
+  "description": "",
+  "devDependencies": {
+    "@sap/ui5-builder-webide-extension": "1.0.x",
+    "@ui5/cli": "2.0.3",
+    "ui5-middleware-livereload": "^0.1.10",
+    "ui5-middleware-simpleproxy": "^0.2.1"
+  },
+  "scripts": {
+    "build": "ui5 build --clean-dest --include-task=generateManifestBundle generateCachebusterInfo"
+  },
+  "ui5": {
+    "dependencies": [
+      "@sap/ui5-builder-webide-extension",
+      "ui5-middleware-simpleproxy",
+      "ui5-middleware-livereload"
+    ]
+  },
+  "private": "true"
+}

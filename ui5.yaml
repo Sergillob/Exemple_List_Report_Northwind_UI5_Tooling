@@ -1,0 +1,53 @@
+specVersion: '2.0'
+metadata:
+  name: exemple_list_report_northwind_ui5_tooling
+type: application
+resources:
+  configuration:
+    propertiesFileSourceEncoding: UTF-8
+builder:
+  customTasks:
+    - name: webide-extension-task-updateNeoApp
+      afterTask: generateVersionInfo
+      configuration:
+        destDir: dist
+        appFolder: webapp
+        nameSpace: sl/elements
+    - name: webide-extension-task-updateManifestJson
+      afterTask: webide-extension-task-updateNeoApp
+      configuration:
+        appFolder: webapp
+        destDir: dist
+    - name: webide-extension-task-lint
+      afterTask: webide-extension-task-updateManifestJson
+      configuration:
+        destDir: dist
+        appFolder: webapp
+        nameSpace: sl/elements 
+    - name: webide-extension-task-resources
+      afterTask: webide-extension-task-lint
+      configuration:
+        nameSpace: sl/elements
+server:
+  customMiddleware:
+  - name: ui5-middleware-simpleproxy
+    mountPath: /northwind/V2/Northwind/Northwind.svc/
+    afterMiddleware: compression
+    configuration:
+      baseUri: https://services.odata.org/V2/Northwind/Northwind.svc/
+  - name: ui5-middleware-livereload
+    afterMiddleware: compression
+    configuration:
+      ext: "xml,json,properties"
+      path: "webapp"
+framework:
+  name: SAPUI5
+  version: "1.76.1"
+  libraries:
+    - name: sap.collaboration
+    - name: sap.m
+    - name: sap.suite.ui.generic.template
+    - name: sap.ui.core
+    - name: sap.ui.generic.app
+    - name: sap.ushell
+    - name: themelib_sap_fiori_3
